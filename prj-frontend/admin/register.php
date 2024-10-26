@@ -1,3 +1,20 @@
+<?php
+session_start(); // Если сессии не включены, убедитесь, что они запускаются
+
+// Функция для проверки, является ли пользователь авторизованным
+function isAuthorized($requiredRole)
+{
+    return isset($_SESSION['user']) && $_SESSION['user']['role'] === $requiredRole;
+}
+
+// Проверяем, является ли пользователь авторизованным администратором
+if (!isAuthorized('admin')) {
+    header('HTTP/1.0 403 Forbidden');
+    echo 'У вас нет прав для доступа к этой странице.';
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
